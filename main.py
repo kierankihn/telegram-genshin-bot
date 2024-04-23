@@ -12,8 +12,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await asyncio.sleep(3)
     await context.bot.delete_messages(chat_id = update.effective_chat.id, message_ids = [message.id, update.effective_message.id])
 
-
-
 async def ziii(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     ziii 命令
@@ -30,7 +28,11 @@ async def ganga(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await asyncio.sleep(3)
     await context.bot.delete_message(chat_id = update.effective_chat.id, message_id = message.id)
 
-
+async def bluff(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    '''
+    质疑
+    '''
+    await context.bot.send_photo(chat_id = update.effective_chat.id, photo = 'https://i.imgur.com/K9wPEdM')
 
 # 构建 bot
 API_KEY = os.getenv('TELEGRAM_API_KEY')
@@ -40,6 +42,7 @@ application = ApplicationBuilder().token(API_KEY).build()
 application.add_handler(CommandHandler('start', start))
 application.add_handler(CommandHandler('ziii', ziii))
 application.add_handler(MessageHandler(filters = filters.Regex('原[\s\S]*神'), callback = ganga))
+application.add_handler(MessageHandler(filters = filters.Regex('''I'm calling your bluff!'''), callback = bluff))
 
 # run!
 application.run_polling()
